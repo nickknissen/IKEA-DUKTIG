@@ -37,58 +37,33 @@ void setup() {
 }
 
 
+
 void loop() {
   PlusbuttonState = digitalRead(PlusbuttonPin);
   MinusbuttonState = digitalRead(MinusbuttonPin);
   LightbuttonState = digitalRead(LightbuttonPin);
 
 
-  if (PlusbuttonState != PluslastButtonState) {
-    if (PlusbuttonState == LOW) {
-      buttonPushCounter++;
-      Serial.println("on");
-      Serial.print("number of button pushes: ");
-      Serial.println(buttonPushCounter);
-    } else {
-      Serial.println("off");
-    }
-    delay(100);
+  if (PlusbuttonState != PluslastButtonState && PlusbuttonState == LOW) {
+    buttonPushCounter++;
   }
   
   PluslastButtonState = PlusbuttonState;
 
-  if (MinusbuttonState != MinuslastButtonState) {
-    if (MinusbuttonState == LOW) {
-      buttonPushCounter--;
-      Serial.println("on");
-      Serial.print("number of button pushes: ");
-      Serial.println(buttonPushCounter);
-    } else {
-      Serial.println("off");
-    }
-    delay(100);
+
+  if (MinusbuttonState != MinuslastButtonState && MinusbuttonState == LOW) {
+    buttonPushCounter--;
   }
   MinuslastButtonState = MinusbuttonState;
 
 
-  if (LightbuttonState != LightlastButtonState) {
-    if (LightbuttonState == LOW) {
-      digitalWrite(OvenLEDPin, HIGH);
-      delay(1000);
-      digitalWrite(OvenLEDPin, LOW);
-    } else {
-      Serial.println("off");
-    }
-    delay(100);
+  if (LightbuttonState != LightlastButtonState && LightbuttonState == LOW) {
+    digitalWrite(OvenLEDPin, HIGH);
+    delay(1000);
+    digitalWrite(OvenLEDPin, LOW);
   }
   LightlastButtonState = LightbuttonState;
 
 
   display.showNumberDec(buttonPushCounter);
-  
-  if (buttonPushCounter % 4 == 0) {
-    Serial.print(buttonPushCounter); 
-    Serial.println("LED ON");
-  } 
-
 }
